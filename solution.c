@@ -146,7 +146,7 @@ void deleteSeat(struct seat s[]) {
 void secondMenu(struct seat s[]) {
     char choice;
 
-    while (1) {
+   while (1) {
         printf("\na) Show number of empty seats\n");
         printf("b) Show list of empty seats\n");
         printf("c) Show alphabetical list of seats\n");
@@ -154,7 +154,11 @@ void secondMenu(struct seat s[]) {
         printf("e) Delete a seat assignment\n");
         printf("f) Return to Main Menu\n");
         printf("Choice: ");
-        scanf(" %c", &choice);
+        
+        //I put this in becasue if not, it will continually check for an end of file and buffer
+        if (scanf(" %c", &choice) == EOF) {
+            return; 
+        }
 
         if (choice == 'a') {
             countEmpty(s);
@@ -180,12 +184,16 @@ int main(void) {
     setupSeats(outbound);
     setupSeats(inbound);
 
-    while (1) {
+        while (1) {
         printf("\na) Outbound Flight\n");
         printf("b) Inbound Flight\n");
         printf("c) Quit\n");
         printf("Choice: ");
-        scanf(" %c", &choice);
+        
+        // I put this in for the same reason as above, to check for end of file and to make it not buffer
+        if (scanf(" %c", &choice) == EOF) {
+            break; 
+        }
 
         if (choice == 'a') {
             secondMenu(outbound);
@@ -197,5 +205,6 @@ int main(void) {
             printf("Invalid choice.\n");
         }
     }
+
     return 0;
 }
